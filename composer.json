@@ -1,0 +1,20 @@
+{
+    "name": "netlogix/coding-guidelines-php",
+    "description": "Collection of Tools for netlogix Coding Guidelines",
+    "type": "library",
+    "require": {
+        "symplify/easy-coding-standard": "^11.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lars Lauger",
+            "email": "lars.lauger@netlogix.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Netlogix\\CodingGuidelines\\Php\\": "src/"
+        }
+    }
+}

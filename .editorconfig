@@ -1,0 +1,23 @@
+# The IDE is assumed to use PSR-2 for PHP files.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# YAML Files
+[*.{yml,yaml,feature}]
+indent_size = 2
+
+# .nvmrc file needs a final newline
+[.nvmrc]
+insert_final_newline = true
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
