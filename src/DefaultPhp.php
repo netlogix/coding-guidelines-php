@@ -12,6 +12,7 @@ final class DefaultPhp
 {
     public function configure(ECSConfig $ecsConfig): ECSConfig
     {
+        $ecsConfig->parallel();
         $ecsConfig->lineEnding("\n");
         $ecsConfig->skip(DefaultPhp::getSkips());
         $ecsConfig->sets(DefaultPhp::getSets());
