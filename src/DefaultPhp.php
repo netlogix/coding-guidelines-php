@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netlogix\CodingGuidelines\Php;
 
 use PhpCsFixer\Fixer;
+use Symplify\CodingStandard\Fixer as SymplifyFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
@@ -25,6 +26,7 @@ final class DefaultPhp
     {
         return [
             Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
+            SymplifyFixer\Naming\StandardizeHereNowDocKeywordFixer::class,
         ];
     }
 
