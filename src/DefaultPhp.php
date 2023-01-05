@@ -51,6 +51,7 @@ final class DefaultPhp
             Fixer\Strict\StrictComparisonFixer::class,
             Fixer\Strict\StrictParamFixer::class,
             Fixer\Import\GlobalNamespaceImportFixer::class,
+            Fixer\Import\FullyQualifiedStrictTypesFixer::class,
         ];
     }
 }
