@@ -30,7 +30,7 @@ final class FlowAnnotationAwareProtectedToPrivateFixer extends AbstractFixer
      */
     public function getDefinition() : FixerDefinitionInterface
     {
-        return new FixerDefinition('Converts `protected` variables and methods to `private` where possible (respects @Flow annotations).', [new CodeSample('<?php
+        return new FixerDefinition('Converts `protected` variables and methods to `private` where possible (respects @Flow annotations or attributes).', [new CodeSample('<?php
 use Neos\Flow\Annotations as Flow;
 
 final class Sample
@@ -42,6 +42,9 @@ final class Sample
      * @Flow\Inject
     */
     protected $b;
+
+    #[Flow\Inject]
+    protected Some\Service $c;
 
     protected function test()
     {
@@ -74,6 +77,25 @@ final class Sample
                 continue;
             }
 
+            if (PHP_MAJOR_VERSION >= 8) {
+                $attributeIndex = $this->getPrevToken($index, [\T_ATTRIBUTE], $tokens);
+                if ($attributeIndex !== null) {
+                    $attribute = $tokens[$attributeIndex];
+
+                    $nextMeaningfulIndex = $tokens->getNextMeaningfulToken($attributeIndex);
+                    $nextMeaningful = $tokens[$nextMeaningfulIndex];
+
+                    assert($nextMeaningful instanceof Token);
+                    if ($nextMeaningful->getContent() === 'Flow') {
+                        $tokensToKeep[] = [
+                            'index' => $index,
+                            'protected' => $protectedIndex,
+                        ];
+                        continue;
+                    }
+                }
+            }
+
             $docCommentIndex = $this->getPrevToken($protectedIndex, [\T_COMMENT, \T_DOC_COMMENT], $tokens);
             if ($docCommentIndex === null) {
                 continue;
@@ -85,7 +107,6 @@ final class Sample
                 $tokensToKeep[] = [
                     'index' => $index,
                     'protected' => $protectedIndex,
-                    'doc' => $docCommentIndex,
                 ];
             }
         }
