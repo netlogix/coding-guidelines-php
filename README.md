@@ -1,7 +1,14 @@
 # netlogix coding guidelines for PHP
 
 ## Installation
-`composer require --dev netlogix/coding-guidelines-php`
+- Install the Composer Package via:
+```bash
+composer require --dev netlogix/coding-guidelines-php`
+```
+
+- Import the `CodeStyleSettings.xml` into your PhpStorm IDE using:
+<kbd>Settings/Preferences</kbd> > <kbd>Editor</kbd> > <kbd>Code Style</kbd> > <kbd>PHP</kbd> > <kbd>⚙️</kbd> > <kbd>Import Scheme...</kbd>
+
 
 ## Basic configuration
 Once installed, add a `ecs.php` file next to your composer.json:
