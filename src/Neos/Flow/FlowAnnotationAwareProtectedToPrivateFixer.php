@@ -68,13 +68,27 @@ final class Sample
         $tokensToKeep = [];
 
         foreach ($tokensAnalyzer->getClassyElements() as $index => $element) {
-            if ($element['type'] !== 'property') {
+            if (!in_array($element['type'], ['property', 'method'], true)) {
                 continue;
             }
 
             $protectedIndex = $this->getPrevToken($index, [\T_PROTECTED], $tokens);
             if ($protectedIndex === null) {
                 continue;
+            }
+
+            if ($element['type'] === 'method') {
+                $nextMeaningful = $tokens[$tokens->getNextMeaningfulToken($index)];
+                assert($nextMeaningful instanceof Token);
+
+                if (in_array($nextMeaningful->getContent(), ['__construct'], true)) {
+                    $tokensToKeep[] = [
+                        'index' => $index,
+                        'protected' => $protectedIndex,
+                    ];
+
+                    continue;
+                }
             }
 
             if (PHP_MAJOR_VERSION >= 8) {
