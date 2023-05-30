@@ -3,7 +3,7 @@
 ## Installation
 - Install the Composer Package via:
 ```bash
-composer require --dev netlogix/coding-guidelines-php`
+composer require --dev netlogix/coding-guidelines-php
 ```
 
 - Import the `CodeStyleSettings.xml` into your PhpStorm IDE using:
