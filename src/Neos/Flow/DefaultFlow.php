@@ -6,6 +6,7 @@ namespace Netlogix\CodingGuidelines\Php\Neos\Flow;
 
 use Netlogix\CodingGuidelines\Php\DefaultPhp;
 use PhpCsFixer\Fixer;
+use Symplify\CodingStandard\Fixer as SymplifyFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 final class DefaultFlow
@@ -38,6 +39,8 @@ final class DefaultFlow
             Fixer\ClassNotation\ProtectedToPrivateFixer::class,
             // This may break Flow Property Mapping
             Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer::class,
+            // Keep default "TODO" comments as they usually indicate there really needs to be done something
+            SymplifyFixer\Commenting\RemoveUselessDefaultCommentFixer::class,
         ];
     }
 
