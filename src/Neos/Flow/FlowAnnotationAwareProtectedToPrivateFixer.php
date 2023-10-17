@@ -30,8 +30,9 @@ final class FlowAnnotationAwareProtectedToPrivateFixer extends AbstractFixer
      */
     public function getDefinition() : FixerDefinitionInterface
     {
-        return new FixerDefinition('Converts `protected` variables and methods to `private` where possible (respects @Flow annotations or attributes).', [new CodeSample('<?php
+        return new FixerDefinition('Converts `protected` variables and methods to `private` where possible (respects @Flow and @ORM annotations or attributes).', [new CodeSample('<?php
 use Neos\Flow\Annotations as Flow;
+use Doctrine\ORM\Mapping as ORM;
 
 final class Sample
 {
@@ -40,6 +41,12 @@ final class Sample
     /**
      * @var Some\Service
      * @Flow\Inject
+    */
+    protected $b;
+
+    /**
+     * @var int
+     * @ORM\Column(nullable=true)
     */
     protected $b;
 
@@ -100,7 +107,7 @@ final class Sample
                     $nextMeaningful = $tokens[$nextMeaningfulIndex];
 
                     assert($nextMeaningful instanceof Token);
-                    if ($nextMeaningful->getContent() === 'Flow') {
+                    if (in_array($nextMeaningful->getContent(), ['Flow', 'ORM'], true)) {
                         $tokensToKeep[] = [
                             'index' => $index,
                             'protected' => $protectedIndex,
@@ -117,7 +124,8 @@ final class Sample
             $docComment = $tokens[$docCommentIndex];
 
             assert($docComment instanceof Token);
-            if (strpos($docComment->getContent(), '@Flow\\') !== false) {
+            if (strpos($docComment->getContent(), '@Flow\\') !== false
+                || strpos($docComment->getContent(), '@ORM\\') !== false) {
                 $tokensToKeep[] = [
                     'index' => $index,
                     'protected' => $protectedIndex,
